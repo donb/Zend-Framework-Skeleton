@@ -1,5 +1,20 @@
 <?php
+/**
+ * New_app
+ *
+ * Copyright (C) 2010 Company. All rights reserved.
+ *
+ * Proprietary code. No modification, distribution or reproduction without
+ * written permission.
+ *
+ * @category   New_app
+ * @package    New_app_Application
+ * @subpackage New_app_Application_Modules_Example_Controllers_Example
+ */
 
+/**
+ * Translation view helper (just a shortcut for translate)
+ */
 class Zend_View_Helper_T extends Zend_View_Helper_Abstract{
     
     /**
