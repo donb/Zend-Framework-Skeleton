@@ -1,9 +1,7 @@
 Description
 ===========
 
-This is a Zend Framework Skeleton built without Zend_Application.
-
-This are some specs regarding the skeleton:
+This is a Zend Framework Skeleton, below you'll find some specs about it.
 
 * Zend Framework
 * Module structure
