@@ -21,3 +21,5 @@ This is a Zend Framework Skeleton, below you'll find some specs about it.
 * App configured to use three environments (dev, staging, production)
 * Zend_Registry up and running
 * All the handy data stored in the Registry like environment, some paths (app path, root path), config object...
+* Custom error page
+* View Helper to translate using the following method $this->t() instead of $this->translate() (much shorter)

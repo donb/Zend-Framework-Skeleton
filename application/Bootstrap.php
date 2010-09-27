@@ -146,6 +146,13 @@ class Bootstrap
             APP_ENVIRONMENT
         );
         
+        //Register the view helper path
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $viewRenderer->initView();
+        
+        //add the global helper directory path
+        $viewRenderer->view->addHelperPath(ROOT_DIR . '/library/Application/ViewHelpers');
+        
         $router = $frontController->getRouter();
         $router->addConfig($routerConfig, 'routes');
         
