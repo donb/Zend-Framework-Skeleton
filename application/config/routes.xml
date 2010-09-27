@@ -1,0 +1,32 @@
+<!--
+    New_app
+    
+    Copyright (C) 2010 Company. All rights reserved.
+    
+    Proprietary code. No modification, distribution or reproduction without
+    written permission.
+    
+    Routing configuration. Define routes that differ from Zend's default routing
+    mechanism here.
+    
+    By default, Zend interprets the following when parsing a request:
+    http://example.org/:controller/:action/:key/:value/:key2/:value2
+-->
+
+<config>
+    <production>
+        <routes>
+            <sites type="Zend_Controller_Router_Route">
+                <route>/</route>
+                <defaults>
+                    <module>example</module>
+                    <controller>example</controller>
+                    <action>index</action>
+                </defaults>
+            </sites>
+        </routes>
+    </production>
+
+    <staging extends="production"/>
+    <development extends="production"/>
+</config>

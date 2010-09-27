@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"; "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Zend Framework Default Application</title>
+        
+        <link rel="stylesheet" href="/css/error.css" type="text/css" media="all" charset="utf-8">
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1><span class="big">Ooops!</span> We made a mistake...</h1>
+            
+            <?php if($this->env == 'development') : ?>
+                <h2><?php echo $this->message; ?></h2>
+                <div id="description">
+                    <h3>Exception information:</h3>
+                    <p class="box">
+                        <b>Message:</b> <?php echo $this->exception->getMessage(); ?>
+                    </p>
+                    
+                    <?php $stack = $this->exception->getTrace(); ?>
+                    <?php $error = $stack[0]; ?>
+                    <h3>File inspection:</h3>
+                    <ul class="box" id="stack-trace">
+                        <?php $file = file($error['file']); ?>
+                        <?php for($x=$error['line'] - 10; $x<=$error['line'] + 10; $x++) : ?>
+                            <li <?php echo ($x == $error['line'])? 'class="highlight"' : '' ; ?>>
+                                <span class="line-number"><?php echo $x?></span>
+                                <?php echo nl2br(str_replace(' ', '&nbsp;', $file[$x])); ?>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                    
+                    <h3>Request Parameters:</h3>
+                    <pre class="box"><?php echo var_export($this->request->getParams(), TRUE); ?></pre>
+                </div>
+            <?php else : ?>
+                <h3>Our apologizes for this error. <br />We have taken note of it and we are working to resolve it as soon as possible.</h3>
+                <ul class="menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Section 1</a></li>
+                    <li><a href="#">Section 2</a></li>
+                    <li><a href="#">Section 3</a></li>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </body>
+</html>
