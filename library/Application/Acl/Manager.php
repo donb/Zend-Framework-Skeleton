@@ -37,8 +37,6 @@ class Application_Acl_Manager
             }
             
             Application_Acl_Manager::_storeAclInRegistry($acl);
-            
-            Application_Acl_Manager::_exportPermissionSchemeToFile();
         }
     }
     
@@ -144,7 +142,7 @@ class Application_Acl_Manager
                 }
             }
         }
-        die(var_dump($acl));
+        
         return $acl;
     }
     
