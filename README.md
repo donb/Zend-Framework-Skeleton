@@ -23,3 +23,14 @@ This is a Zend Framework Skeleton, below you'll find some specs about it.
 * All the handy data stored in the Registry like environment, some paths (app path, root path), config object...
 * Custom error page
 * View Helper to translate using the following method $this->t() instead of $this->translate() (much shorter)
+
+Installation
+============
+
+1. Get a copy of the files in your machine
+2. Create two folders called cache and log in the root of the project and a subfolder in log called missing_translations
+    On *nix:  mkdir -p cache log/missing_translations
+3. Give read/write access to those folders
+    On *nix: chmod -R 777 cache log
+
+That's it you can start now using the skeleton to build the next amazing app!
