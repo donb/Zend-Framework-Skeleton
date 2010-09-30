@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flagflippers-scheme>
+  <roles>
+    <role>guest</role>
+    <role>member</role>
+    <role>admin</role>
+    <role>someUser</role>
+    <role>someUser2</role>
+    <role>someUser3</role>
+  </roles>
+  <resources>
+    <resource>someResource</resource>
+    <resource>someResource2</resource>
+  </resources>
+  <flippers>
+    <flipper role="guest">
+      <flag resource="someResource" allow="0"/>
+      <flag resource="someResource2" allow="0"/>
+    </flipper>
+    <flipper role="member">
+      <flag resource="someResource" allow="0"/>
+      <flag resource="someResource2" allow="0"/>
+    </flipper>
+    <flipper role="admin">
+      <flag resource="someResource" allow="1"/>
+      <flag resource="someResource2" allow="1"/>
+    </flipper>
+    <flipper role="someUser">
+      <flag resource="someResource" allow="0"/>
+      <flag resource="someResource2" allow="0"/>
+    </flipper>
+    <flipper role="someUser2">
+      <flag resource="someResource" allow="1"/>
+      <flag resource="someResource2" allow="1"/>
+    </flipper>
+    <flipper role="someUser3">
+      <flag resource="someResource" allow="1"/>
+      <flag resource="someResource2" allow="1"/>
+    </flipper>
+  </flippers>
+  <inheritance>
+    <parents role="someUser3">
+      <inherit role="guest"/>
+      <inherit role="member"/>
+      <inherit role="admin"/>
+    </parents>
+  </inheritance>
+</flagflippers-scheme>
