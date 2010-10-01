@@ -23,5 +23,6 @@ class ExampleController extends AppController
      * @return void
      */
     public function indexAction(){
+        echo Application_FlagFlippers_Manager::isAllowed('christopher', 'index') ? 'allowed' : 'denied';
     }
 }

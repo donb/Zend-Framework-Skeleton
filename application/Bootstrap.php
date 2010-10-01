@@ -27,7 +27,7 @@ class Bootstrap
         $this->_initLocale();
         $this->_initCache();
         $this->_initZFDebug();
-        $this->_initACL();
+        $this->_initFlagFlippers();
     }
     
     /**
@@ -220,8 +220,8 @@ class Bootstrap
      *
      * @return void
      */
-    private function _initACL(){
-        Application_Acl_Manager::loadAcl();
+    private function _initFlagFlippers(){
+        Application_FlagFlippers_Manager::load();
     }
     
     /**

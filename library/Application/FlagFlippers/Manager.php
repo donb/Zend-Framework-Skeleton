@@ -15,9 +15,9 @@
 /**
  * Handle different operations with the ACL and the functionality deploy
  */
-class Application_Acl_Manager
+class Application_FlagFlippers_Manager
 {
-    private static $indexKey = 'FlagFlippers';
+    public static $indexKey = 'FlagFlippers';
     
     /**
      * Load the ACL to the Registry if is not there
@@ -29,14 +29,14 @@ class Application_Acl_Manager
      * 
      * @return void
      */
-    public static function loadAcl(){
-        if(!Application_Acl_Manager::_checkIfExist()){
-            if(!$acl = Application_Acl_Manager::_getAclFromMemcache()){
-                $acl = Application_Acl_Manager::_generateAclFromPermissionSchemeFile();
-                Application_Acl_Manager::_storeAclInMemcache($acl);
+    public static function load(){
+        if(!Application_FlagFlippers_Manager::_checkIfExist()){
+            if(!$acl = Application_FlagFlippers_Manager::_getFromMemcache()){
+                $acl = Application_FlagFlippers_Manager::_generateFromPermissionSchemeFile();
+                Application_FlagFlippers_Manager::_storeInMemcache($acl);
             }
             
-            Application_Acl_Manager::_storeAclInRegistry($acl);
+            Application_FlagFlippers_Manager::_storeInRegistry($acl);
         }
     }
     
@@ -45,13 +45,17 @@ class Application_Acl_Manager
      *
      * @return boolean
      */
-    public static function saveAcl(){
-        if(Application_Acl_Manager::_checkIfExist()){
-            Application_Acl_Manager::_exportPermissionSchemeToFile();
-            Application_Acl_Manager::_storeAclInMemcache();
+    public static function save(){
+        if(Application_FlagFlippers_Manager::_checkIfExist()){
+            Application_FlagFlippers_Manager::_exportPermissionSchemeToFile();
+            Application_FlagFlippers_Manager::_storeInMemcache();
         }else{
             throw new Exception('To be able to save an ACL first have to be inside the Zend_Registry');
         }
+    }
+    
+    public function isAllowed($role, $resource){
+        return Application_FlagFlippers_Manager::_getFromRegistry()->isAllowed('christopher', 'index');
     }
     
     /**
@@ -60,7 +64,7 @@ class Application_Acl_Manager
      * @return boolean
      */
     private function _checkIfExist(){
-        return Zend_Registry::isRegistered(Application_Acl_Manager::$indexKey);
+        return Zend_Registry::isRegistered(Application_FlagFlippers_Manager::$indexKey);
     }
     
     /**
@@ -68,9 +72,9 @@ class Application_Acl_Manager
      *
      * @return void
      */
-    private static function _getAclFromRegistry(){
-        if(Application_Acl_Manager::_checkIfExist()){
-            return Zend_Registry::get(Application_Acl_Manager::$indexKey);
+    private static function _getFromRegistry(){
+        if(Application_FlagFlippers_Manager::_checkIfExist()){
+            return Zend_Registry::get(Application_FlagFlippers_Manager::$indexKey);
         }
         
         return FALSE;
@@ -81,10 +85,10 @@ class Application_Acl_Manager
      *
      * @return Zend_Acl | boolean
      */
-    private static function _getAclFromMemcache(){
+    private static function _getFromMemcache(){
         $cacheHandler = Zend_Registry::get('Zend_Cache_Manager')->getCache('memcache');
         
-        if($acl = $cacheHandler->load(Application_Acl_Manager::$indexKey)){
+        if($acl = $cacheHandler->load(Application_FlagFlippers_Manager::$indexKey)){
             return $acl;
         }
         
@@ -96,7 +100,7 @@ class Application_Acl_Manager
      *
      * @return Zend_Acl
      */
-    private static function _generateAclFromPermissionSchemeFile(){
+    private static function _generateFromPermissionSchemeFile(){
         $acl = new Zend_Acl();
         
         $xml = new DOMDocument();
@@ -151,9 +155,9 @@ class Application_Acl_Manager
      *
      * @return void
      */
-    private static function _storeAclInMemcache($acl = NULL){
-        if(is_null($acl) && Application_Acl_Manager::_checkIfExist()){
-            $acl = Application_Acl_Manager::_getAclFromRegistry();
+    private static function _storeInMemcache($acl = NULL){
+        if(is_null($acl) && Application_FlagFlippers_Manager::_checkIfExist()){
+            $acl = Application_FlagFlippers_Manager::_getFromRegistry();
         }
         
         if(empty($acl)){
@@ -162,7 +166,7 @@ class Application_Acl_Manager
         
         $cacheHandler = Zend_Registry::get('Zend_Cache_Manager')->getCache('memcache');
         
-        $cacheHandler->save($acl, Application_Acl_Manager::$indexKey);
+        $cacheHandler->save($acl, Application_FlagFlippers_Manager::$indexKey);
     }
     
     /**
@@ -170,8 +174,8 @@ class Application_Acl_Manager
      *
      * @return void
      */
-    private static function _storeAclInRegistry($acl){
-        Zend_Registry::set(Application_Acl_Manager::$indexKey, $acl);
+    private static function _storeInRegistry($acl){
+        Zend_Registry::set(Application_FlagFlippers_Manager::$indexKey, $acl);
     }
     
     /**
@@ -180,8 +184,8 @@ class Application_Acl_Manager
      * @return void
      */
     private static function _exportPermissionSchemeToFile(){
-        if(Application_Acl_Manager::_checkIfExist()){
-            $acl = Application_Acl_Manager::_getAclFromRegistry();
+        if(Application_FlagFlippers_Manager::_checkIfExist()){
+            $acl = Application_FlagFlippers_Manager::_getFromRegistry();
             
             //Get the roles and resources
             $roles = $acl->getRoles();
