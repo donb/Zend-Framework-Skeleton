@@ -32,8 +32,6 @@ class AppController extends Zend_Controller_Action{
      * @return void
      */
     private function _initTranslationSystem(){
-        $config = Zend_Registry::get('config');
-        
         //Extract some info from the request
         $module = $this->getRequest()->getModuleName();
         $lang = Zend_Registry::get('Zend_Locale')->getLanguage();
@@ -48,10 +46,10 @@ class AppController extends Zend_Controller_Action{
                 'adapter' => 'gettext',
                 'content' => APP_PATH . '/modules/' . $module . '/translations/' . $lang . '.mo',
                 'locale'  => $lang,
-                'disableNotices' => $config->translations->disable_notices,
+                'disableNotices' => Zend_Registry::get('config')->translations->disable_notices,
                 'log' => $logger,
                 'logMessage' => "Missing translation: %message%",
-                'logUntranslated' => TRUE
+                'logUntranslated' => Zend_Registry::get('config')->translations->log_missing_translations
             )
         );
         

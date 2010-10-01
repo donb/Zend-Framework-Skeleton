@@ -25,7 +25,9 @@ class Bootstrap
     public function __construct($configSection) {
         $this->_init($configSection);
         $this->_initLocale();
+        $this->_initCache();
         $this->_initZFDebug();
+        $this->_initACL();
     }
     
     /**
@@ -211,5 +213,65 @@ class Bootstrap
             $frontController = Zend_Controller_Front::getInstance();
             $frontController->registerPlugin($debug);
         }
+    }
+    
+    /**
+     * Initialize the ACL System
+     *
+     * @return void
+     */
+    private function _initACL(){
+        Application_Acl_Manager::loadAcl();
+    }
+    
+    /**
+     * Initialize the Cache System
+     *
+     * @return void
+     */
+    private function _initCache(){
+        $manager = new Zend_Cache_Manager();
+        
+        //Cache with file as a backend
+        $file = array(
+            'frontend' => array(
+                'name' => 'Core',
+                'options' => array(
+                    'lifetime' => Zend_Registry::get('config')->cache->file->lifetime,
+                    'automatic_serialization' => TRUE
+                )
+            ),
+            'backend' => array(
+                'name' => 'File',
+                'options' => array(
+                    'cache_dir' => ROOT_DIR . '/cache/'
+                )
+            )
+        );
+        
+        //Cache with memcache as a backend
+        $memcache = array(
+            'frontend' => array(
+                'name' => 'Core',
+                'options' => array(
+                    'lifetime' => Zend_Registry::get('config')->cache->memcache->lifetime,
+                    'automatic_serialization' => TRUE,
+                    'caching' => Zend_Registry::get('config')->cache->enabled,
+                    'logging' => Zend_Registry::get('config')->cache->logging,
+                )
+            ),
+            'backend' => array(
+                'name' => 'Memcached',
+                'options' => array(
+                    'servers' => Zend_Registry::get('config')->memcache->toArray(),
+                )
+            )
+        );
+        
+        //Add the templates to the manager
+        $manager->setCacheTemplate('file', $file);
+        $manager->setCacheTemplate('memcache', $memcache);
+        
+        Zend_Registry::set('Zend_Cache_Manager', $manager);
     }
 }
