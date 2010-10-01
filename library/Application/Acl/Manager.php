@@ -108,11 +108,11 @@ class Application_Acl_Manager
             $inheritance = array();
             $parents = $xml->getElementsByTagName('parents');
             if($parents){
-                foreach($parents as $p){
-                    if($p->getAttribute('role') == $role->nodeValue){
-                        $inherit = $p->getElementsByTagName('inherit');
-                        foreach($inherit as $i){
-                            $inheritance[] = $i->getAttribute('role');
+                foreach($parents as $inherit){
+                    if($inherit->getAttribute('role') == $role->nodeValue){
+                        $inheritedFrom = $inherit->getElementsByTagName('inherit');
+                        foreach($inheritedFrom as $i){
+                            $inheritance[] = $i->nodeValue;
                         }
                     }
                 }
@@ -208,7 +208,7 @@ class Application_Acl_Manager
             $doc->preserveWhiteSpace = FALSE;
             $doc->formatOutput = TRUE;
             
-            $root = $doc->createElement('flagflippers-scheme');
+            $root = $doc->createElement('permissions');
             $doc->appendChild($root);
             
             $rolesNode = $doc->createElement('roles');
@@ -242,24 +242,24 @@ class Application_Acl_Manager
                 foreach($permissions as $role => $flippers){
                     $flipperNode = $doc->createElement('flipper');
                     $flippersNode->appendChild($flipperNode);
-
+                    
                     $roleAttr = $doc->createAttribute('role');
                     $flipperNode->appendChild($roleAttr);
-
+                    
                     $roleAttr->appendChild($doc->createTextNode($role));
-
+                    
                     foreach($flippers as $flipper){
                         $flagNode = $doc->createElement('flag');
                         $flipperNode->appendChild($flagNode);
-
+                        
                         $resourceAttr = $doc->createAttribute('resource');
                         $flagNode->appendChild($resourceAttr);
-
+                        
                         $resourceAttr->appendChild($doc->createTextNode($flipper[0]));
-
+                        
                         $allowAttr = $doc->createAttribute('allow');
                         $flagNode->appendChild($allowAttr);
-
+                        
                         $allowAttr->appendChild($doc->createTextNode((int) $flipper[1]));
                     }
                 }
@@ -270,20 +270,15 @@ class Application_Acl_Manager
                 foreach($parents as $role => $parent){
                     $parentNode = $doc->createElement('parents');
                     $inheritanceNode->appendChild($parentNode);
-
+                    
                     $roleAttr = $doc->createAttribute('role');
                     $parentNode->appendChild($roleAttr);
-
+                    
                     $roleAttr->appendChild($doc->createTextNode($role));
-
+                    
                     foreach($parent as $p){
-                        $inheritNode = $doc->createElement('inherit');
+                        $inheritNode = $doc->createElement('inherit', $p);
                         $parentNode->appendChild($inheritNode);
-
-                        $roleAttr = $doc->createAttribute('role');
-                        $inheritNode->appendChild($roleAttr);
-
-                        $roleAttr->appendChild($doc->createTextNode($p));
                     }
                 }
             }

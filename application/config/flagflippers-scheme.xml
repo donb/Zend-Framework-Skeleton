@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flagflippers-scheme>
+<permissions>
   <roles>
     <role>guest</role>
     <role>member</role>
@@ -40,9 +40,9 @@
   </flippers>
   <inheritance>
     <parents role="someUser3">
-      <inherit role="guest"/>
-      <inherit role="member"/>
-      <inherit role="admin"/>
+      <inherit>guest</inherit>
+      <inherit>member</inherit>
+      <inherit>admin</inherit>
     </parents>
   </inheritance>
-</flagflippers-scheme>
+</permissions>
