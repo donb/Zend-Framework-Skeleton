@@ -55,7 +55,7 @@ class Application_FlagFlippers_Manager
     }
     
     public function isAllowed($role, $resource){
-        return Application_FlagFlippers_Manager::_getFromRegistry()->isAllowed('christopher', 'index');
+        return Application_FlagFlippers_Manager::_getFromRegistry()->isAllowed($role, $resource);
     }
     
     /**
