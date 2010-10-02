@@ -16,17 +16,17 @@
 <config>
     <production>
         <routes>
-            <sites type="Zend_Controller_Router_Route">
-                <route>/</route>
+            <default type="Zend_Controller_Router_Route">
+                <route>:module/:controller/:action/*</route>
                 <defaults>
                     <module>example</module>
                     <controller>example</controller>
                     <action>index</action>
                 </defaults>
-            </sites>
+            </default>
         </routes>
     </production>
-
+    
     <staging extends="production"/>
     <development extends="production"/>
 </config>

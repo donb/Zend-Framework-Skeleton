@@ -120,7 +120,6 @@ class Bootstrap
         // Point the front controller to your module directory.
         // "frontend" is goinbg to be the default Module
         $frontController->addModuleDirectory(ROOT_DIR . '/application/modules');
-        $frontController->setDefaultModule('example');
         
         // Registering all the frontController Plugins
         $config = Zend_Registry::get('config');
@@ -142,6 +141,10 @@ class Bootstrap
         // Logger Action Helper adds a helper to $this->_helpers list that give you
         // the possibility to log to Firebug. Example: $this->_helper->log('Message');
         Zend_Controller_Action_HelperBroker::addHelper(new Application_ActionHelper_Logger());
+        
+        // Add the Flag and Flippers helper for the controllers
+        // This helper is accessible via $this->_helper->flagFlippers()
+        Zend_Controller_Action_HelperBroker::addHelper(new Application_ActionHelper_FlagFlippers());
         
         $routerConfig = new Zend_Config_Xml(
             APP_PATH . '/config/routes.xml',

@@ -15,7 +15,7 @@
 /**
  * Example Controller
  */
-class ExampleController extends AppController
+class Example_ExampleController extends AppController
 {
     /**
      * Principal action
@@ -23,6 +23,6 @@ class ExampleController extends AppController
      * @return void
      */
     public function indexAction(){
-        echo Application_FlagFlippers_Manager::isAllowed('christopher', 'index') ? 'allowed' : 'denied';
+        echo $this->_helper->flagFlippers('christopher', 'index') ? 'allowed' : 'denied';
     }
 }
