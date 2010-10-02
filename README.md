@@ -23,6 +23,7 @@ This is a Zend Framework Skeleton, below you'll find some specs about it.
 * All the handy data stored in the Registry like environment, some paths (app path, root path), config object...
 * Custom error page
 * View Helper to translate using the following method $this->t() instead of $this->translate() (much shorter)
+* Flag and Flippers concept of flickr (Still under development)
 
 Installation
 ============
